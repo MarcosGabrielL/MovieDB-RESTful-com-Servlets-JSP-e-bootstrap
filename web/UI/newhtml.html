@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+
+  <meta charset="UTF-8">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+  
+<style>
+:root {
+  --color1: #708ed2;
+  --color2: #272532;
+  --color3: #ebe5e2;
+  --color4: #83cfdf;
+  --color5: #13688c;
+  --color6: #373b69;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--color6) !important;
+}
+
+nav {
+  background: #6065ac;
+}
+nav a {
+  color: #ebe5e2;
+  font-size: 2.5rem !important;
+}
+
+.movie-card {
+  padding: 10px;
+}
+.movie-description {
+  background: var(--color5);
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+.movie-title {
+  color: var(--color3);
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+.movie-vote {
+  background: var(--color2);
+  color: orange;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.movie-img {
+  border-radius: 0.5rem 0.5rem 0 0;
+  overflow: hidden;
+  max-height: 100% !important;
+}
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+</head>
+
+<body translate="no" >
+  <nav class="fixed-top d-flex justify-content-center navbar p-2">
+      <a href="index.html" class="p-0 navbar-brand d-none d-lg-block"
+        >Movie Finder</a
+      >
+      <form id="search-form" class="form-inline">
+        <input
+          id="search"
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+      </form>
+    </nav>
+    <section>
+      <div class="container-fluid mt-5 p-5">
+        <div id="movie-content" class="row d-flex justify-content-center">
+          <!-- javascript will come here -->
+        </div>
+      </div>
+    </section>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a id="previous" class="btn page-link" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item">
+          <a id="next" class="btn page-link">Next</a>
+        </li>
+      </ul>
+    </nav>
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
+
+  
+      <script id="rendered-js" >
+const API_KEY = "249f222afb1002186f4d88b2b5418b55";
+
+const API_SEARCH = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=`;
+
+const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
+
+let page = "501";
+
+const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=true&page=`;
+
+const mainContent = document.getElementById("movie-content");
+// search form elements
+const form = document.getElementById("search-form");
+const search = document.getElementById("search");
+// pagination elements
+const pageLinks = document.querySelectorAll(".page-link");
+console.log(pageLinks);
+
+// initially get the most popular movies list's first page
+getMovies(API_URL + page);
+
+// previous and next page
+pageLinks.forEach(pageLink => {
+  pageLink.addEventListener("click", () => {
+    if (pageLink.id === "next") {
+      page++;
+      getMovies(API_URL + page);
+    }
+    if (pageLink.id === "previous" && page > 1) {
+      page--;
+      getMovies(API_URL + page);
+    }
+  });
+});
+
+// search for a movie
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  console.log(search.value);
+  const query = search.value;
+  if (query) {
+    getMovies(API_SEARCH + query);
+  }
+});
+
+async function getMovies(url) {
+  const resp = await fetch(url);
+  const respData = await resp.json();
+  console.log(respData);
+  console.log(respData.total_pages);
+  showMovies(respData.results);
+}
+
+function showMovies(movies) {
+  mainContent.innerHTML = "";
+  movies.forEach(movie => {
+    const movieTitle = movie.title;
+    const moviePoster = movie.poster_path;
+    const movieVote = movie.vote_average;
+    const movieDesc = movie.overview;
+    const movieData = movie.release_date;
+    const movietempo = movie.release_date;
+    
+    const movieElm = document.createElement("div");
+    movieElm.classList.add(
+    "col-xs-12",
+    "col-sm-6",
+    "col-md-4",
+    "col-lg-3",
+    "p-0");
+
+
+    movieElm.innerHTML = `
+    <div class="movie-card">
+              <img
+                class="img-fluid movie-img"
+                src="${IMAGE_PATH}${moviePoster}"
+                onError="this.onerror=null;this.src='https://i.ebayimg.com/images/g/1EMAAMXQdGJR2-n3/s-l1600.jpg';"
+                alt="Sorry, something went wrong"
+              />
+              <div
+                class="movie-description p-3 d-flex justify-content-between align-items-center"
+              >
+                <h3 class="movie-title">${movieTitle}</h3>
+                <h3 class="movie-vote">${movieVote}</h3>
+              </div>
+            </div>
+    `;
+    mainContent.appendChild(movieElm);
+    $.ajax({
+   method: "POST",
+   url: "http://localhost:8080/ASA/addMovie_DB",
+   data: {src: IMAGE_PATH + moviePoster,
+          title: movieTitle,
+          rate: movieVote,
+          overview: movieDesc,
+          data: movieData,
+          tempo: movietempo
+        }
+          });
+  });
+  
+  
+    
+  
+  
+}
+
+
+//# sourceURL=pen.js
+    </script>
+
+   
+    
+
+</body>
+
+</html>
+ 
+
