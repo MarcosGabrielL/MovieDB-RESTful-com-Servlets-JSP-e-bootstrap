@@ -252,6 +252,7 @@ h1, h2, p, a, span{
 	width: 100%;
 	height: 1725px;
 	margin: 0 auto;
+        background: #fff;
 }	
 	/*********************************************** HEADER ***********************************************/
 	header {
@@ -266,7 +267,7 @@ h1, h2, p, a, span{
         		-webkit-transform: translateZ(0); /** To avoid a flash when hover messages **/
 			}
 				.header-menu-tab {
-					padding: 0 25px;
+					padding: 0 25px 0px 2px;
 					display: block;
 					line-height: 41px;
 					font-size: 17px;
@@ -274,8 +275,7 @@ h1, h2, p, a, span{
 					transition: background .3s;
 				}
 					.header-menu-tab:hover {
-						background: rgba(0,0,0, 0.5);
-						border-bottom: 4px solid #11a8ab;
+						border-bottom: 4px solid #fffc45;
 						text-decoration: none;
 					}
 					.header-menu-tab .icon {
@@ -286,10 +286,12 @@ h1, h2, p, a, span{
 					line-height: 22px;
 					padding: 0 6px;
 					font-weight: 700;
-					background: #fffc45;
-					border-radius: 100%;
-					    top: 13px;
-    right: -1px;
+                                        color: #fff;
+					background: #FF3A3A;
+					border-radius: 100%;    top: 20px;
+    left: 14px;
+
+
 					-webkit-transition: all .3s linear;
 					transition: all .3s linear;
 				}
@@ -339,7 +341,8 @@ h1, h2, p, a, span{
 				height: 360px;
 			}
 				.menu-box .titular {
-					background: #5EC2FF;
+					background: #333333;
+    color: #fff;
 				}
 				.menu-box-menu .icon {
 					display: inline-block;
@@ -351,12 +354,13 @@ h1, h2, p, a, span{
 				.menu-box-number {
 					width: 36px;
 					line-height: 22px;
-					background: #FFFC45;
+					background: #FF3A3A;
 					text-align: center;
 					border-radius: 15px;
 					position: absolute;
 					top: 15px;
 					right: 15px;
+                                        color: #fff;
 					-webkit-transition: all .3s;
 					transition: all .3s;
 				}
@@ -380,7 +384,7 @@ h1, h2, p, a, span{
 						
 					}
 					.menu-box-tab:hover .menu-box-number {
-						background: #FF3A3A;
+						background: #fffc45;
 					}
 			.donut-chart-block {
 				height: 434px;
@@ -398,11 +402,11 @@ h1, h2, p, a, span{
 					  position: relative;
 						width: 200px;
 					  height: 200px;
-						margin: 0 auto 2rem;
+						margin: 49px auto 0;
 						border-radius: 100%
 					 }
 					p.center-date {
-					  background: #394264;
+					  background: #fff;
 					  position: absolute;
 					  text-align: center;
 						font-size: 28px;
@@ -474,13 +478,13 @@ h1, h2, p, a, span{
 				END DONUT-CHART by @kseso https://codepen.io/Kseso/pen/phiyL
 				******************************************/
         .os-percentages {
-					padding-top: 36px;
+					padding-top: 40px;
 				}
         .os-percentages li {
-					width: 75px;
-					border-left: 1px solid #394264;
+					width: 84px;
+                                        margin: 0.1px;
 					text-align: center;					
-					background: #50597b;
+					background: floralwhite;
 				}
 					.os {
 						margin: 0;

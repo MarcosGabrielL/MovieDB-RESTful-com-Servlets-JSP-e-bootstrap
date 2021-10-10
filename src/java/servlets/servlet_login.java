@@ -11,6 +11,7 @@ package servlets;
  * @author Marcos
  */
 
+import Bean.Cinefilo;
 import Dao.Login_CinefiloDAO;
 import java.io.IOException;  
 import java.io.PrintWriter;  
@@ -35,9 +36,11 @@ public void doPost(HttpServletRequest request, HttpServletResponse response)
     
     System.out.println(Login_CinefiloDAO.validate(n, p).getUser() );
           
-    if(Login_CinefiloDAO.validate(n, p).getUser() != null){  
+    Cinefilo cinefilo = new Cinefilo();
+    cinefilo = Login_CinefiloDAO.validate(n, p);
+    if( cinefilo.getUser() != null){  
          
-        request.getSession().setAttribute("UserId",n);
+        request.getSession().setAttribute("UserId",cinefilo.getUser());
         response.sendRedirect("UI/Profile_Cinefilo.jsp");
         
     }  

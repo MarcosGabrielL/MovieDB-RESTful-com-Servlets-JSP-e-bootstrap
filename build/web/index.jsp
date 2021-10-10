@@ -26,7 +26,7 @@
   <title>ASA - Ágora da Sétima Arte</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   	<link rel="stylesheet" href="style.css">
-<link rel="shortcut icon" type="image/x-icon" href="../resource/favicon-16x16.png">
+<link rel="shortcut icon" type="image/x-icon" href="resource/favicon-16x16.png">
 
   <style>
     .onclick-menu {
@@ -74,8 +74,10 @@
 	<div class="window">
 
 		<aside href="/Home" class="sidebar">
-			<div href="/Home" class="top-bar">
-				<p class="logo" href="/Home">ASA</p>
+			<div href="/Home" class="top-bar"style="text-align: center;">
+				<a href="../Home" >
+                        <img style="height: 45px; width: 45px;" src="resource/logosemfundo.png" alt="ASA" >
+                        </a>
 			</div>
 
 			<menu class="menu">
