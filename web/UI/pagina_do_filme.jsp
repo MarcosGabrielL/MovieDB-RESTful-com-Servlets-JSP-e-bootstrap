@@ -4,21 +4,42 @@
     Author     : Marcos
 --%>
 
+<%@page import="Bean.Movie"%>
+<%@page import="Dao.MoviesDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
 <html lang="en" style="background: #f3f3f3;" >
-
+     
 <head>
 
   <meta charset="UTF-8">
-  <title>ASA - Ágora da Sétima Arte</title>
-  <link rel="shortcut icon" type="image/x-icon" href="../resource/favicon-16x16.png">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/resource/favicon-16x16.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-  	<link rel="stylesheet" href="../style.css">
-        <link rel="stylesheet" type="text/css" href="pagina_do_filme.css">
+  	<link rel="stylesheet" href="<%=request.getContextPath()%>/style.css">
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/UI/pagina_do_filme.css">
    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+
+<script>
+    window.onload= function() {
+   <% String titulo = request.getParameter("name"); 
+     System.out.println("1"+titulo);
+     System.out.println("2"+request.getSession().getAttribute("name"));
+     
+     if(titulo!=null){
+        request.getSession().setAttribute("name",titulo);
+     }
+    
+   MoviesDAO mdao = new MoviesDAO();
+    Movie m = mdao.info_movie(request.getSession().getAttribute("name").toString());
+    %>
+        window.history.replaceState({}, document.title, "/" + "ASA/Filme#/<%=m.getSeries_Title() %>");
+    };
+ </script>
+    <title>ASA - <%=m.getSeries_Title() %></title>
+
 <style>
 html {
   font-size: 10px;
@@ -89,7 +110,7 @@ a {
 }
 .title a h2 {
   display:inline-block;
-  font-size: 3.84rem;
+  font-size: xx-large;
   color:#1b1b1b;
 }
 .title span {
@@ -410,24 +431,6 @@ a {
 }
 
 </style>
-
-
-
-    </script>
-
-  <script>
-  window.console = window.console || function(t) {};
-</script>
-
-  
-  
-  <script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
-</script>
-
-
 </head>
 
 <body translate="no" >
@@ -448,8 +451,8 @@ a {
 
 		<aside class="sidebar">
                     <div class="top-bar" style="text-align: center;" >
-                        <a href="../Home" >
-                        <img style="height: 45px; width: 45px;" src="../resource/logosemfundo.png" alt="ASA" >
+                        <a href="<%=request.getContextPath()%>/Home" >
+                        <img style="height: 45px; width: 45px;" src="<%=request.getContextPath()%>/resource/logosemfundo.png" alt="ASA" >
                         </a></div>
 
 			<menu class="menu">
@@ -524,9 +527,61 @@ a {
 	    position: absolute;
 	    margin-right: 10px;
 	"></p>
-				<div class="profile-box">
-					<div class="circle"></div>
-					<span class="arrow1 fa fa-angle-down"></span>
+				<div  class="profile-box onclick-menu" tabindex="0">
+					<% if((String) request.getSession().getAttribute("UserId")!=null){
+					%><div class="circle"></div>
+                                        <span class="arrow1 fa fa-angle-down"></span>
+                                        <ul class="onclick-menu-content" style="    margin-top: 49px;">
+                                            <li><a href="#" style="
+    border: none;
+    padding: 0px auto;
+    /* height: 10px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    width: 180px;
+    margin-bottom: -1px;
+">Perfil</a></li>
+					<li><a href="#" style="     
+    border: none;
+    padding: 0px auto;
+    /* height: 10px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    width: 180px;
+    margin-bottom: -1px;
+">Críticas</a></li>
+					<li ><a onclick="theFunction();" style="  
+    border: none;
+    padding: 0px auto;
+    /* height: 10px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    width: 180px;
+    margin-bottom: -1px;
+">Saír</a></li>
+    </ul>
+                                        <%}else{%>
+                                        <div onclick="location.href='http://localhost:8080/ASA/UI/login_cinefilo.jsp';">
+                                            <a href="http://localhost:8080/ASA/UI/login_cinefilo.jsp">
+                                                <span href="http://localhost:8080/ASA/UI/login_cinefilo.jsp" style="font-size: 14px; 
+                                                font-weight: bold; padding: 6px 30px;
+                                                background: #fffc45;
+                                                color: #515151;
+                                                border-radius: 30px;
+                                                margin-right: 0px;
+                                                border: none;">
+                                                Sign In
+                                            </span>
+                                            </a>
+                                            
+                                            </div>
+                                          <%}      %>
 				</div>
 
 
@@ -636,22 +691,22 @@ a {
     background-blend-mode: multiply;">
         <div class="content">
           <div class="image">
-              <img  style="right: 73%;
-    position: absolute;"src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/or06FN3Dka5tukK1e9sl16pB3iy.jpg" />
+              <img  style="right: 73%; height: 72%;
+    position: absolute;"src="<%=m.getPoster_Link() %>" />
           </div>
           <div class="info">
             <div class="title">
               <a href="#">
-                <h2>Avengers: Endgame</h2>
+                <h2><%=m.getSeries_Title() %></h2>
               </a>
-                <span><br>(2019)</span>
+                <span><br><%=m.getReleased_Year() %></span>
             </div>
             <div class="meta-actions">
               <div class="score">
                 <div class="percentage-circle">
                   <div class="percentage-circle-stroke">
                     <div class="percent">
-                      <span>98.8<sup></sup>
+                      <span><%=m.getIMDB_Rating() %><sup></sup>
                       </span>
                     </div>
                   </div>
@@ -680,7 +735,7 @@ a {
             <div class="about">
               <div class="overview">
                 <h3>Visão geral</h3>
-                <p>After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.</p>
+                <p><%=m.getOverview() %></p>
               </div>
                 
              <div class="movie-data" style="font-size: 18px;">

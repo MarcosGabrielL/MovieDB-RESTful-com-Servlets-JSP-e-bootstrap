@@ -42,10 +42,11 @@ public class MoviesDAO {
             while(rs.next()){
             
                Movie movie = new Movie();
-                System.err.println(movie.getPoster_Link());
+               // System.err.println(movie.getPoster_Link());
                movie.setSeries_Title(rs.getString("Title"));
                movie.setPoster_Link(rs.getString("Poster"));
                movie.setIMDB_Rating(rs.getString("Rating"));
+               movie.setId(rs.getString("idMovies_"));
                 
                 
                 movies.add(movie);
@@ -55,6 +56,94 @@ public class MoviesDAO {
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro 3: "+ex);
+        }finally {
+  try {
+   if(con!=null){
+    con.close();
+   }
+ } catch (Exception e2) {
+ // TODO: handle exception
+ }
+        
+        return movies;
+        
+    
+    }
+    }
+    
+    public Movie info_movie(String titulo){
+    
+         DB_Connection obj_DB_Connection = new DB_Connection();
+        Connection con = obj_DB_Connection.getConnection();
+        PreparedStatement stmt = null;
+        Cinefilo adm = new Cinefilo();
+        ResultSet rs = null;
+        Movie movie = new Movie();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM data.movies_ where idMovies_ like ?");
+            stmt.setString(1, ""+titulo+"");
+              rs = stmt.executeQuery();
+            
+            while(rs.next()){
+            
+               
+               movie.setSeries_Title(rs.getString("Title"));
+               movie.setPoster_Link(rs.getString("Poster"));
+               movie.setIMDB_Rating(rs.getString("Rating"));
+               movie.setOverview(rs.getString("Overview"));
+               movie.setReleased_Year(rs.getString("Released_Year").substring(0, 4));
+               movie.setId(rs.getString("idMovies_"));
+                
+            }
+            
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro 3: "+ex);
+        }finally {
+  try {
+   if(con!=null){
+    con.close();
+   }
+ } catch (Exception e2) {
+ // TODO: handle exception
+ }
+    }
+        return movie;
+    }
+    
+    public List<Movie> Procurar(String nome){
+    
+         DB_Connection obj_DB_Connection = new DB_Connection();
+        Connection con = obj_DB_Connection.getConnection();
+        PreparedStatement stmt = null;
+        Cinefilo adm = new Cinefilo();
+        ResultSet rs = null;
+        List<Movie> movies = new ArrayList<Movie>();
+        
+        int cont = 0;
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM data.movies_ where title like ?");
+            stmt.setString(1, ""+nome+"%");
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+            
+               Movie movie = new Movie();
+                System.err.println(movie.getPoster_Link());
+               movie.setSeries_Title(rs.getString("Title"));
+               movie.setPoster_Link(rs.getString("Poster"));
+               movie.setIMDB_Rating(rs.getString("Rating"));
+               movie.setId(rs.getString("idMovies_"));
+                
+                movies.add(movie);
+                cont ++;
+            }
+            
+            
+        } catch (SQLException ex) {
+            System.out.println( "Erro 3: "+ex);
         }finally {
   try {
    if(con!=null){

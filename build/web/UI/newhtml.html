@@ -121,7 +121,8 @@ const API_SEARCH = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}
 
 const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
 
-let page = "501";
+//let page = "501";
+let page = "1";
 
 const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=true&page=`;
 
@@ -176,7 +177,10 @@ function showMovies(movies) {
     const movieVote = movie.vote_average;
     const movieDesc = movie.overview;
     const movieData = movie.release_date;
-    const movietempo = movie.release_date;
+    const movietempo = movie.runtime;
+    const movieid = movie.id;
+    
+    busca_detalhe(movieid);
     
     const movieElm = document.createElement("div");
     movieElm.classList.add(
@@ -204,30 +208,63 @@ function showMovies(movies) {
             </div>
     `;
     mainContent.appendChild(movieElm);
-    $.ajax({
-   method: "POST",
-   url: "http://localhost:8080/ASA/addMovie_DB",
-   data: {src: IMAGE_PATH + moviePoster,
-          title: movieTitle,
-          rate: movieVote,
-          overview: movieDesc,
-          data: movieData,
-          tempo: movietempo
-        }
-          });
+    //$.ajax({
+   //method: "POST",
+   //url: "http://localhost:8080/ASA/addMovie_DB",
+   //data: {src: IMAGE_PATH + moviePoster,
+      //    title: movieTitle,
+     //     rate: movieVote,
+     //     overview: movieDesc,
+     //     data: movieData,
+     //     tempo: movietempo
+       // }
+        //  });
   });
   
-  
-    
-  
-  
+    }
+
+function busca_detalhe(id){
+      var api_key = "249f222afb1002186f4d88b2b5418b55";
+      
+   var requestURL = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api_key + "";
+
+    var request = new XMLHttpRequest();
+
+    request.open('GET', requestURL);
+
+    request.responseType = 'json';
+
+    request.send();
+
+    request.onload = function(){
+        var myjsondata = request.response; //request.response contains all our JSON data 
+
+       //alert(JSON.stringify(myjsondata.genres));
+        //console.log(JSON.stringify(myjsondata));
+        
+       $.ajax({
+   method: "POST",
+   url: "http://localhost:8080/ASA/addMovie_DB_Details",
+   data: {  movieTitle : myjsondata.title,
+            moviePoster : myjsondata.poster_path,
+            movieVote : myjsondata.vote_average,
+            movieDesc : myjsondata.overview,
+            movieData : myjsondata.release_date,
+            movietempo : myjsondata.runtime,
+            movieid : myjsondata.id,
+            moviegenres : JSON.stringify(myjsondata.genres)
+        }
+          });
+    } 
 }
 
 
 //# sourceURL=pen.js
     </script>
 
-   
+    <script>
+            
+    </script>
     
 
 </body>

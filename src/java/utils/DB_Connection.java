@@ -25,7 +25,7 @@ public class DB_Connection {
   
   public Connection getConnection(){
    Connection con=null;
-   System.out.println("Connection called");
+   //System.out.println("Connection called");
    
   try {
       Class.forName("com.mysql.jdbc.Driver");
@@ -36,10 +36,10 @@ public class DB_Connection {
             con = DriverManager.getConnection(dbURL, user, pass);
             if (con != null) {
                 DatabaseMetaData dm = (DatabaseMetaData) con.getMetaData();
-                System.out.println("Driver name: " + dm.getDriverName());
-                System.out.println("Driver version: " + dm.getDriverVersion());
-                System.out.println("Product name: " + dm.getDatabaseProductName());
-                System.out.println("Product version: " + dm.getDatabaseProductVersion());
+                //System.out.println("Driver name: " + dm.getDriverName());
+                //System.out.println("Driver version: " + dm.getDriverVersion());
+                //System.out.println("Product name: " + dm.getDatabaseProductName());
+                //System.out.println("Product version: " + dm.getDatabaseProductVersion());
             }
   
   } catch (ClassNotFoundException e) {

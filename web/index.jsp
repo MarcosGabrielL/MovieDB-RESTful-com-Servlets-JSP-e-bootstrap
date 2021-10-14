@@ -157,7 +157,7 @@
 					%><div class="circle"></div>
                                         <span class="arrow1 fa fa-angle-down"></span>
                                         <ul class="onclick-menu-content" style="    margin-top: 49px;">
-                                            <li><a href="#" style="
+                                            <li><a onclick=" window.location.assign('http://localhost:8080/ASA/UI/Profile_Cinefilo.jsp')" style="
     border: none;
     padding: 0px auto;
     /* height: 10px; */

@@ -30,6 +30,17 @@ private String Star4;
 private String No_of_Votes;
 private String Gross;
 private String Rate;
+private String Id;
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }
+
+
 
     public String getRate() {
         return Rate;

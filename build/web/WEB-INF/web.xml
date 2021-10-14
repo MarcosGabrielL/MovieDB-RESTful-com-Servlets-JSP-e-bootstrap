@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet-mapping>
+        <servlet-name>buscar_filme_pagina_servlet</servlet-name>
+        <url-pattern>/buscar_filme_pagina_servlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -9,11 +13,14 @@
         <servlet-name>servlet_login</servlet-name>
         <servlet-class>servlets.servlet_login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>buscar_filme_pagina_servlet</servlet-name>
+        <servlet-class>servlets.buscar_filme_pagina_servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servlet_login</servlet-name>
         <url-pattern>/servlet_login</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>addMovie_DB</servlet-name>
         <servlet-class>servlets.addMovie_DB</servlet-class>
@@ -22,7 +29,6 @@
         <servlet-name>addMovie_DB</servlet-name>
         <url-pattern>/addMovie_DB</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>servlet_cadastro_cinefilo</servlet-name>
         <servlet-class>servlets.servlet_cadastro_cinefilo</servlet-class>
@@ -31,7 +37,6 @@
         <servlet-name>servlet_cadastro_cinefilo</servlet-name>
         <url-pattern>/servlet_cadastro_cinefilo</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>Home</servlet-name>
         <jsp-file>/index.jsp</jsp-file>
@@ -39,5 +44,13 @@
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Filme</servlet-name>
+        <jsp-file>/UI/pagina_do_filme.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Filme</servlet-name>
+        <url-pattern>/Filme</url-pattern>
     </servlet-mapping>
 </web-app>

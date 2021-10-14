@@ -4,16 +4,24 @@
     Author     : Marcos
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="Bean.Movie"%>
 <%@page import="Dao.MoviesDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+    
+    <% MoviesDAO mdao = new MoviesDAO();
+    List<Movie> movies = new ArrayList<Movie>();
+    movies = mdao.read();
+    %>
+    
     <head>
 
   <meta charset="UTF-8">
   <title>Busca de Filme</title>
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
 
 <link rel="shortcut icon" type="image/x-icon" href="../resource/favicon-16x16.png">
@@ -145,8 +153,10 @@ input {
   <div class="window">
 
     <aside class="sidebar">
-      <div class="top-bar">
-        <p class="logo">ASA</p>
+      <div class="top-bar" style="text-align: center;" >
+        <a href="<%=request.getContextPath()%>/Home" >
+                        <img style="height: 45px; width: 45px;" src="<%=request.getContextPath()%>/resource/logosemfundo.png" alt="ASA" >
+                        </a>
       </div>
 
       
@@ -158,10 +168,62 @@ input {
       <div class="top-bar">
   
   
-        <div class="profile-box">
-          <div class="circle"></div>
-          <span class="arrow1 fa fa-angle-down"></span>
-        </div>
+        <div  class="profile-box onclick-menu" tabindex="0">
+					<% if((String) request.getSession().getAttribute("UserId")!=null){
+					%><div class="circle"></div>
+                                        <span class="arrow1 fa fa-angle-down"></span>
+                                        <ul class="onclick-menu-content" style="    margin-top: 49px;">
+                                            <li><a href="google.com" style="
+    border: none;
+    padding: 0px auto;
+    /* height: 10px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    width: 180px;
+    margin-bottom: -1px;
+">Perfil</a></li>
+					<li><a href="#" style="     
+    border: none;
+    padding: 0px auto;
+    /* height: 10px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    width: 180px;
+    margin-bottom: -1px;
+">Críticas</a></li>
+					<li ><a onclick="theFunction();" style="  
+    border: none;
+    padding: 0px auto;
+    /* height: 10px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    width: 180px;
+    margin-bottom: -1px;
+">Saír</a></li>
+    </ul>
+                                        <%}else{%>
+                                        <div onclick="location.href='http://localhost:8080/ASA/UI/login_cinefilo.jsp';">
+                                            <a href="http://localhost:8080/ASA/UI/login_cinefilo.jsp">
+                                                <span href="http://localhost:8080/ASA/UI/login_cinefilo.jsp" style="font-size: 14px; 
+                                                font-weight: bold; padding: 6px 30px;
+                                                background: #fffc45;
+                                                color: #515151;
+                                                border-radius: 30px;
+                                                margin-right: 0px;
+                                                border: none;">
+                                                Sign In
+                                            </span>
+                                            </a>
+                                            
+                                            </div>
+                                          <%}      %>
+				</div>
 
 
         <ul class="top-menu">
@@ -192,28 +254,26 @@ input {
   
 
 
-
-
-
-
-
-
 <div id="root">
    <div data-reactroot="" class="app">
-      <form class="search"><input type="search" value="" placeholder="Search for Movie Title …"></form>
-      <ul class="movies" style="margin: 5%;">
-             <% MoviesDAO mdao = new MoviesDAO();
+      <form class="search">
+          <input onkeyup="myFunction()" type="search" value="" placeholder="Search for Movie Title …" name="name" id="values">
+      </form>
+      <ul id="aa" class="movies" style="margin: 5%;">
+             <% 
                 int i = 0;
-                for(Movie movie : mdao.read()){
-                    if(i>=100){
+                for(Movie movie : movies){
+                    if(i>=20){
                         break;
                     }
                  i++;
              %>
          <li>
-            <div class="movie">
+            <div href="#" class="movie">
                <figure class="movie__figure">
+                  <a  href="http://localhost:8080/ASA/Filme?name=<%=movie.getId() %>">
                   <img href="#" style="height: 100%; width: 100%;" src="<%=movie.getPoster_Link() %>" class="movie__poster">
+                    </a>
                   <figcaption><span class="movie__vote"><%=movie.getIMDB_Rating() %></span></figcaption>
                   <h2 class="movie__title"><%=movie.getSeries_Title() %></h2>
                   </figure>
@@ -225,23 +285,36 @@ input {
    </div>
 </div>
 
+         <script>
 
-
-
-
-
-
-
-
-
-
-
+function myFunction() {
+   const x = document.getElementById("values");
+   //alert(x.value);
+  AddTableRow();
+  }
+    function AddTableRow(){
+        
+        var dsc = document.getElementById('values').value;
+        $.ajax({
+                type: "GET",
+                url: '../buscar_filme_pagina_servlet',
+                data: "debusc=" + dsc,
+                complete: [
+                    function (response) {
+                        $("#aa").find("li").remove();
+                        
+                        var trHTML = response.responseText;
+                        $("#aa").append(trHTML);
+                    }
+                ]
+            });
+    }
+    
+  
+</script>
 
   
-
-
-
-
+             </script>
  
 </body>
 </html>
