@@ -20,7 +20,7 @@ public class DB_Connection {
     
   public static void main(String[] args) {
    DB_Connection ob_DB_Connection = new DB_Connection();
-   System.out.println(ob_DB_Connection.getConnection());
+   //System.out.println(ob_DB_Connection.getConnection());
   }
   
   public Connection getConnection(){

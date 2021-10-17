@@ -271,7 +271,7 @@ input {
          <li>
             <div href="#" class="movie">
                <figure class="movie__figure">
-                  <a  href="http://localhost:8080/ASA/Filme?name=<%=movie.getId() %>">
+                  <a  href="http://localhost:8080/ASA/Filme?name=<%=movie.getTMDBId() %>">
                   <img href="#" style="height: 100%; width: 100%;" src="<%=movie.getPoster_Link() %>" class="movie__poster">
                     </a>
                   <figcaption><span class="movie__vote"><%=movie.getIMDB_Rating() %></span></figcaption>
@@ -286,10 +286,13 @@ input {
 </div>
 
          <script>
+             
+             
 
 function myFunction() {
-   const x = document.getElementById("values");
+   //const x = document.getElementById("values");
    //alert(x.value);
+   
   AddTableRow();
   }
     function AddTableRow(){
@@ -301,6 +304,7 @@ function myFunction() {
                 data: "debusc=" + dsc,
                 complete: [
                     function (response) {
+                       // alert("AQUI");
                         $("#aa").find("li").remove();
                         
                         var trHTML = response.responseText;

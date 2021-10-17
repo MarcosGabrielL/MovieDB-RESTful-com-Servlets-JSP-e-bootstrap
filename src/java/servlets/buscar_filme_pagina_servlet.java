@@ -67,19 +67,20 @@ public class buscar_filme_pagina_servlet extends HttpServlet {
         StringBuilder texto = new StringBuilder("\n");
         MoviesDAO pdao = new MoviesDAO();
         
+        int i = 0;
         for(Movie p : pdao.Procurar(String.valueOf(nome))){
-            
+            System.out.println("buscar_filme_pagina..."+p.getSeries_Title());
             
             texto.append("<li>"
                     + "<div class=\"movie\"><figure class=\"movie__figure\">"
-                    + "<a href=\"http://localhost:8080/ASA/Filme?name=").append(p.getId()).append("\">"
+                    + "<a href=\"http://localhost:8080/ASA/Filme?name=").append(p.getTMDBId()).append("\">"
                     + "<img href=\"#\" style=\"height: 100%; width: 100%;\" src=").append(p.getPoster_Link()).append(" class=\"movie__poster\">"
                             + "</a>"
                             + "<figcaption><span class=\"movie__vote\">").append(p.getIMDB_Rating()).append("</span></figcaption><h2 class=\"movie__title\">").append(p.getSeries_Title()).append("</h2></figure></div></li>");  
         
         }
             response.getWriter().write(texto.toString());
-        
+       
     }
 
     /**

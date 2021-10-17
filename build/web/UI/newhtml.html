@@ -124,7 +124,7 @@ const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
 //let page = "501";
 let page = "1";
 
-const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=true&page=`;
+const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=vote_count.desc&include_video=true&page=`;
 
 const mainContent = document.getElementById("movie-content");
 // search form elements
@@ -226,7 +226,7 @@ function showMovies(movies) {
 function busca_detalhe(id){
       var api_key = "249f222afb1002186f4d88b2b5418b55";
       
-   var requestURL = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api_key + "&append_to_response=release_dates";
+   var requestURL = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api_key + "&append_to_response=release_dates,credits";
 
     var request = new XMLHttpRequest();
 
@@ -239,12 +239,12 @@ function busca_detalhe(id){
     request.onload = function(){
         var myjsondata = request.response; //request.response contains all our JSON data 
 
-     //alert(myjsondata.release_dates);
+     //alert(myjsondata.credits);
         //console.log(JSON.stringify(myjsondata));
         
-       $.ajax({
-   method: "POST",
-   url: "http://localhost:8080/ASA/addMovie_DB_Details",
+    //   $.ajax({
+   //method: "POST",
+   //url: "http://localhost:8080/ASA/addMovie_DB_Details",
    data: {  movieTitle : myjsondata.title,
             moviePoster : myjsondata.poster_path,
             movieVote : myjsondata.vote_average,
@@ -254,7 +254,8 @@ function busca_detalhe(id){
             movieid : myjsondata.id,
             moviegenres : JSON.stringify(myjsondata.genres),
             movieid : id,
-            movierelease : JSON.stringify(myjsondata.release_dates)
+            movierelease : JSON.stringify(myjsondata.release_dates),
+            moviecrew : JSON.stringify(myjsondata.credits)
         }
           });
     } 

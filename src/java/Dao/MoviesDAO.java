@@ -36,7 +36,7 @@ public class MoviesDAO {
         int cont = 0;
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM data.movies_");
+            stmt = con.prepareStatement("SELECT * FROM data.movies LIMIT 20");
             rs = stmt.executeQuery();
             
             while(rs.next()){
@@ -46,7 +46,7 @@ public class MoviesDAO {
                movie.setSeries_Title(rs.getString("Title"));
                movie.setPoster_Link(rs.getString("Poster"));
                movie.setIMDB_Rating(rs.getString("Rating"));
-               movie.setId(rs.getString("idMovies_"));
+               movie.setTMDBId(rs.getString("TMDBId"));
                 
                 
                 movies.add(movie);
@@ -81,7 +81,7 @@ public class MoviesDAO {
         Movie movie = new Movie();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM data.movies_ where idMovies_ like ?");
+            stmt = con.prepareStatement("SELECT * FROM data.movies where TMDBId like ? LIMIT 20");
             stmt.setString(1, ""+titulo+"");
               rs = stmt.executeQuery();
             
@@ -93,7 +93,11 @@ public class MoviesDAO {
                movie.setIMDB_Rating(rs.getString("Rating"));
                movie.setOverview(rs.getString("Overview"));
                movie.setReleased_Year(rs.getString("Released_Year").substring(0, 4));
-               movie.setId(rs.getString("idMovies_"));
+               movie.setTMDBId(rs.getString("TMDBId"));
+               //movie.setCertificate(rs.getString("Certificate"));
+               movie.setRumtime(rs.getString("Runtime"));
+               movie.setGenre(rs.getString("Genre"));
+               
                 
             }
             
@@ -124,18 +128,17 @@ public class MoviesDAO {
         int cont = 0;
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM data.movies_ where title like ?");
+            stmt = con.prepareStatement("SELECT Title,Poster,Rating,TMDBId FROM data.movies where Title like ? LIMIT 5");
             stmt.setString(1, ""+nome+"%");
             rs = stmt.executeQuery();
             
             while(rs.next()){
             
                Movie movie = new Movie();
-                System.err.println(movie.getPoster_Link());
                movie.setSeries_Title(rs.getString("Title"));
                movie.setPoster_Link(rs.getString("Poster"));
                movie.setIMDB_Rating(rs.getString("Rating"));
-               movie.setId(rs.getString("idMovies_"));
+               movie.setTMDBId(rs.getString("TMDBId"));
                 
                 movies.add(movie);
                 cont ++;
@@ -145,6 +148,7 @@ public class MoviesDAO {
         } catch (SQLException ex) {
             System.out.println( "Erro 3: "+ex);
         }finally {
+            
   try {
    if(con!=null){
     con.close();
@@ -152,11 +156,8 @@ public class MoviesDAO {
  } catch (Exception e2) {
  // TODO: handle exception
  }
-        
-        return movies;
-        
-    
     }
+        return movies;
     }
       
     

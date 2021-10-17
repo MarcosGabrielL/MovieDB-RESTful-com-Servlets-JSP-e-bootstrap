@@ -36,6 +36,7 @@
     Movie m = mdao.info_movie(request.getSession().getAttribute("name").toString());
     %>
         window.history.replaceState({}, document.title, "/" + "ASA/Filme#/<%=m.getSeries_Title() %>");
+        
     };
  </script>
     <title>ASA - <%=m.getSeries_Title() %></title>
@@ -748,19 +749,15 @@ a {
     margin-right: -1px;
     color: #fff;
     background-color: #298eea;
-    /* font-style: italic;*/">10</i>
+    /* font-style: italic;*/"><%=m.getCertificate()%></i>
                 <span id="Rated" style="display: inline-block;
     margin: 0 5px;
-    color: #333333;">123 min</span><span>
+    color: #333333;"><%=m.getRumtime() %> Min</span><span>
         <a href="/years/2019/" rel="tag" style="color: #333333;
     text-decoration: none;
     transition: 0.3s ease;
-    opacity: 0.7;">Ação</a>
-    </span>|<span>
-        <a href="/genre/action/" style="color: #333333;
-    text-decoration: none;
-    transition: 0.3s ease;
-    opacity: 0.7;">Aventura</a></span>
+    opacity: 0.7;"><%=m.getGenre().replace(",", " | ") %></a>
+    </span>|<span></span>
               </div>
             </div>
                 
@@ -917,7 +914,7 @@ a {
     background: #fff;
     height: auto;">
     <h1>Elenco</h1>
-  <ul class="person-list">
+  <ul id="aa" class="person-list">
       <li>
           <a href="#" class="person-item" style="color:#333333;font-weight: bold; font-size: 1.3em;">
               <img src="https://www.fakepersongenerator.com/Face/male/male20161083938332337.jpg" class="person-avatar">
@@ -1068,6 +1065,49 @@ function changeSlide() {
 //# sourceURL=pen.js
     </script>
 
+    <script>
+        
+
+         function busca_detalhe(){
+           
+        
+      var api_key = "249f222afb1002186f4d88b2b5418b55";
+      
+   var requestURL = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api_key + "&append_to_response=release_dates,credits";
+
+    var request = new XMLHttpRequest();
+
+    request.open('GET', requestURL);
+
+    request.responseType = 'json';
+
+    request.send();
+
+    
+        var myjsondata = request.response; //request.response contains all our JSON data 
+
+     //alert(myjsondata.credits);
+        //console.log(JSON.stringify(myjsondata));
+        
+       $.ajax({
+      type: "GET",
+       url: "http://localhost:8080/ASA/addMovie_DB_Details",
+        data: {movierelease : JSON.stringify(myjsondata.release_dates),
+            moviecrew : JSON.stringify(myjsondata.credits)
+        }
+      complete: [
+                    function (response) {
+                      alert("AQUI");
+                        $("#aa").find("li").remove();
+                        
+                        var trHTML = response.responseText;
+                       // $("#aa").append(trHTML);
+                    }
+                ]
+          });
+    } ;
+        </script>
+    
 </body>
 
 </html>

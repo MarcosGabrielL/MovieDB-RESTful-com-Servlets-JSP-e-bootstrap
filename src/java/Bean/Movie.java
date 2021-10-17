@@ -31,6 +31,28 @@ private String No_of_Votes;
 private String Gross;
 private String Rate;
 private String Id;
+private String TMDBId;
+private String Elenco;
+
+    public String getElenco() {
+        return Elenco;
+    }
+
+    public void setElenco(String Elenco) {
+        this.Elenco = Elenco;
+    }
+
+
+
+    public String getTMDBId() {
+        return TMDBId;
+    }
+
+    public void setTMDBId(String TMDBId) {
+        this.TMDBId = TMDBId;
+    }
+
+
 
     public String getId() {
         return Id;

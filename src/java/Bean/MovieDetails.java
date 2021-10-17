@@ -13,205 +13,168 @@ import java.util.List;
  */
 public class MovieDetails {
     
-     private boolean adult;
-    private String backdropPath;
-    private String belongsToCollection;
-    private String budget;
-    private String Genero;
-    private String homepage;
-    private String id;
-    private String imdbId;
-    private String originalLanguage;
-    private String originalTitle;
-    private String overview;
-    private String popularity;
-    private String posterPath;
-    private String releaseDate;
-    private String revenue;
-    private String runtime;
-    private String status;
-    private String tagline;
-    private String title;
-    private String video;
-    private String voteAverage;
-    private String voteCount;
+private String Poster_Link;
+private String Series_Title;
+private String Released_Year;
+private String Certificate;
+private String Rumtime;
+private String Genre;
+private String IMDB_Rating;
+private String Overview;
+private String Meta_score;
+private String Director;
+private String Star1;
+private String Star2;
+private String Star3;
+private String Star4;
+private String No_of_Votes;
+private String Gross;
+private String Rate;
+private String Id;
 
-    public boolean isAdult() {
-        return adult;
+    public String getPoster_Link() {
+        return Poster_Link;
     }
 
-    public void setAdult(boolean adult) {
-        this.adult = adult;
+    public void setPoster_Link(String Poster_Link) {
+        this.Poster_Link = Poster_Link;
     }
 
-    public String getBackdropPath() {
-        return backdropPath;
+    public String getSeries_Title() {
+        return Series_Title;
     }
 
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
+    public void setSeries_Title(String Series_Title) {
+        this.Series_Title = Series_Title;
     }
 
-    public String getBelongsToCollection() {
-        return belongsToCollection;
+    public String getReleased_Year() {
+        return Released_Year;
     }
 
-    public void setBelongsToCollection(String belongsToCollection) {
-        this.belongsToCollection = belongsToCollection;
+    public void setReleased_Year(String Released_Year) {
+        this.Released_Year = Released_Year;
     }
 
-    public String getBudget() {
-        return budget;
+    public String getCertificate() {
+        return Certificate;
     }
 
-    public void setBudget(String budget) {
-        this.budget = budget;
+    public void setCertificate(String Certificate) {
+        this.Certificate = Certificate;
     }
 
-    public String getGenero() {
-        return Genero;
+    public String getRumtime() {
+        return Rumtime;
     }
 
-    public void setGenero(String Genero) {
-        this.Genero = Genero;
+    public void setRumtime(String Rumtime) {
+        this.Rumtime = Rumtime;
     }
 
-    public String getHomepage() {
-        return homepage;
+    public String getGenre() {
+        return Genre;
     }
 
-    public void setHomepage(String homepage) {
-        this.homepage = homepage;
+    public void setGenre(String Genre) {
+        this.Genre = Genre;
     }
 
-    public String getId() {
-        return id;
+    public String getIMDB_Rating() {
+        return IMDB_Rating;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getImdbId() {
-        return imdbId;
-    }
-
-    public void setImdbId(String imdbId) {
-        this.imdbId = imdbId;
-    }
-
-    public String getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
-    }
-
-    public String getOriginalTitle() {
-        return originalTitle;
-    }
-
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
+    public void setIMDB_Rating(String IMDB_Rating) {
+        this.IMDB_Rating = IMDB_Rating;
     }
 
     public String getOverview() {
-        return overview;
+        return Overview;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
+    public void setOverview(String Overview) {
+        this.Overview = Overview;
     }
 
-    public String getPopularity() {
-        return popularity;
+    public String getMeta_score() {
+        return Meta_score;
     }
 
-    public void setPopularity(String popularity) {
-        this.popularity = popularity;
+    public void setMeta_score(String Meta_score) {
+        this.Meta_score = Meta_score;
     }
 
-    public String getPosterPath() {
-        return posterPath;
+    public String getDirector() {
+        return Director;
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setDirector(String Director) {
+        this.Director = Director;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public String getStar1() {
+        return Star1;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setStar1(String Star1) {
+        this.Star1 = Star1;
     }
 
-    public String getRevenue() {
-        return revenue;
+    public String getStar2() {
+        return Star2;
     }
 
-    public void setRevenue(String revenue) {
-        this.revenue = revenue;
+    public void setStar2(String Star2) {
+        this.Star2 = Star2;
     }
 
-    public String getRuntime() {
-        return runtime;
+    public String getStar3() {
+        return Star3;
     }
 
-    public void setRuntime(String runtime) {
-        this.runtime = runtime;
+    public void setStar3(String Star3) {
+        this.Star3 = Star3;
     }
 
-    public String getStatus() {
-        return status;
+    public String getStar4() {
+        return Star4;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStar4(String Star4) {
+        this.Star4 = Star4;
     }
 
-    public String getTagline() {
-        return tagline;
+    public String getNo_of_Votes() {
+        return No_of_Votes;
     }
 
-    public void setTagline(String tagline) {
-        this.tagline = tagline;
+    public void setNo_of_Votes(String No_of_Votes) {
+        this.No_of_Votes = No_of_Votes;
     }
 
-    public String getTitle() {
-        return title;
+    public String getGross() {
+        return Gross;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setGross(String Gross) {
+        this.Gross = Gross;
     }
 
-    public String getVideo() {
-        return video;
+    public String getRate() {
+        return Rate;
     }
 
-    public void setVideo(String video) {
-        this.video = video;
+    public void setRate(String Rate) {
+        this.Rate = Rate;
     }
 
-    public String getVoteAverage() {
-        return voteAverage;
+    public String getId() {
+        return Id;
     }
 
-    public void setVoteAverage(String voteAverage) {
-        this.voteAverage = voteAverage;
+    public void setId(String Id) {
+        this.Id = Id;
     }
-
-    public String getVoteCount() {
-        return voteCount;
-    }
-
-    public void setVoteCount(String voteCount) {
-        this.voteCount = voteCount;
-    }
-
     
-    
+
 }

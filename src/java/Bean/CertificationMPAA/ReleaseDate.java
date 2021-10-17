@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Bean;
+package Bean.CertificationMPAA;
 
 import java.sql.Date;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
