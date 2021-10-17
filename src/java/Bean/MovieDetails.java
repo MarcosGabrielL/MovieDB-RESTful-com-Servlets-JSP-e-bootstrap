@@ -17,7 +17,7 @@ public class MovieDetails {
     private String backdropPath;
     private String belongsToCollection;
     private String budget;
-    private List<Genero> genres;
+    private String Genero;
     private String homepage;
     private String id;
     private String imdbId;
@@ -68,12 +68,12 @@ public class MovieDetails {
         this.budget = budget;
     }
 
-    public List<Genero> getGenres() {
-        return genres;
+    public String getGenero() {
+        return Genero;
     }
 
-    public void setGenres(List<Genero> genres) {
-        this.genres = genres;
+    public void setGenero(String Genero) {
+        this.Genero = Genero;
     }
 
     public String getHomepage() {
@@ -211,6 +211,7 @@ public class MovieDetails {
     public void setVoteCount(String voteCount) {
         this.voteCount = voteCount;
     }
+
     
     
 }

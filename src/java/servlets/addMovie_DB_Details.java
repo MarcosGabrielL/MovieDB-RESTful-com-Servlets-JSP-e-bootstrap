@@ -5,9 +5,11 @@
  */
 package servlets;
 
-import Bean.Genero;
-import Bean.Movie;
+
 import Bean.MovieDetails;
+import Bean.ReleaseDate;
+import Bean.Result;
+import Bean.Root;
 import Dao.MoviesDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -16,7 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 
 /**
  *
@@ -28,31 +32,50 @@ public class addMovie_DB_Details extends HttpServlet {
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        StringBuilder texto = new StringBuilder("\n");
+        MovieDetails movie = new MovieDetails();
         String title=request.getParameter("movieTitle");  
-        texto.append(title+"---");
+       movie.setTitle(title);
            String poster=request.getParameter("moviePoster"); 
-           texto.append(poster+"---");
+       movie.setPosterPath(poster);
            String Rate=request.getParameter("movieVote");  
-           texto.append(Rate+"---");
+       movie.setVoteAverage(Rate);
            String overvew=request.getParameter("movieDesc");
-           texto.append(overvew+"---");
+       movie.setOverview(overvew);
            String data=request.getParameter("movieData");
-           texto.append(data+"---");
-           
+       movie.set
            String genero = request.getParameter("moviegenres");
+           String Genres = "";
            ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(genero);
             for(int i=0;i<jsonNode.size() ;i++){
             JsonNode node = jsonNode.get(i);
-            texto.append(node.get("name").toString());
-            System.out.println("Genero" + node.get("name").toString());
+            Genres = Genres.concat(node.get("name").toString().replace("\"","" )+",");
             }
-             
+             texto.append(Genres.substring (0, Genres.length() - 1));
            String runtime=request.getParameter("movietempo");
-           texto.append(runtime+"---");
+           texto.append(runtime+"\n");
+           String movieid =request.getParameter("movieid");
+           texto.append(movieid+"\n");
            
+           
+           
+           String release = request.getParameter("movierelease");
+           
+           ObjectMapper objectMapper1 = new ObjectMapper();
+           String certification = "";
+           Root c = objectMapper1.readValue(release, Root.class);
+           for(Result b : c.getResults()){
+               if(b.getIso_3166_1().toString().equals("US")){
+                for(ReleaseDate a : b.getRelease_dates()){
+                    System.out.println("CERTI: "+a.getCertification());
+                }
+               }
+           }
+           texto.append(certification+"\n");
+           
+           if(movieid.equals("566525")){
            System.out.println("Filme:" + texto);
+           }
            
            MovieDetails movie = new MovieDetails();
            

@@ -226,7 +226,7 @@ function showMovies(movies) {
 function busca_detalhe(id){
       var api_key = "249f222afb1002186f4d88b2b5418b55";
       
-   var requestURL = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api_key + "";
+   var requestURL = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api_key + "&append_to_response=release_dates";
 
     var request = new XMLHttpRequest();
 
@@ -239,7 +239,7 @@ function busca_detalhe(id){
     request.onload = function(){
         var myjsondata = request.response; //request.response contains all our JSON data 
 
-       //alert(JSON.stringify(myjsondata.genres));
+     //alert(myjsondata.release_dates);
         //console.log(JSON.stringify(myjsondata));
         
        $.ajax({
@@ -252,7 +252,9 @@ function busca_detalhe(id){
             movieData : myjsondata.release_date,
             movietempo : myjsondata.runtime,
             movieid : myjsondata.id,
-            moviegenres : JSON.stringify(myjsondata.genres)
+            moviegenres : JSON.stringify(myjsondata.genres),
+            movieid : id,
+            movierelease : JSON.stringify(myjsondata.release_dates)
         }
           });
     } 
