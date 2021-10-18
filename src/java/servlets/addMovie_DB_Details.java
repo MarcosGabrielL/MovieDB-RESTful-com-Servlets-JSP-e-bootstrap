@@ -6,12 +6,14 @@
 package servlets;
 
 
+import Bean.Movie;
 import Bean.CertificationMPAA.ReleaseDate;
 import Bean.CertificationMPAA.Result;
 import Bean.CertificationMPAA.Root;
+import Bean.Crew.Cast;
 import Bean.Crew.Crew;
 import Bean.Crew.RootCrew;
-import Bean.Movie;
+import Dao.MoviesDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,16 +29,15 @@ import org.codehaus.jackson.map.SerializationConfig;
  *
  * @author Marcos
  */
+@WebServlet(name = "addMovie_DB_Details", urlPatterns = {"/addMovie_DB_Details"})
 public class addMovie_DB_Details extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
     
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-       
-       /* Movie movie = new Movie();
+        Movie movie = new Movie();
         
         String title=request.getParameter("movieTitle");  
             movie.setSeries_Title(title);
@@ -74,7 +75,7 @@ public class addMovie_DB_Details extends HttpServlet {
            for(Result b : c.getResults()){
                if(b.getIso_3166_1().toString().equals("US")){
                 for(ReleaseDate a : b.getRelease_dates()){
-                   // System.out.println("MOVIE: "+ movie.getSeries_Title() + "\nCERTI: "+a.getCertification());
+                   System.out.println("MOVIE: "+ movie.getSeries_Title() + "\nCERTI: "+a.getCertification());
                     certification = a.getCertification();
                     break;
                 }
@@ -87,63 +88,26 @@ public class addMovie_DB_Details extends HttpServlet {
            String Director = "";
            ObjectMapper objectMapper2 = new ObjectMapper();
            RootCrew rootcrew = objectMapper2.readValue(moviecrew, RootCrew.class);
-           for(Crew cast : rootcrew.getCrew()){
-               if(cast.getKnown_for_department().equals("Directing")){
-                   
+           for(Cast cast : rootcrew.getCast()){
+               if(cast.getKnown_for_department().equals("Acting")){
+                   System.out.println("ATOR: "+cast.getName());
                    Director = Director.concat(cast.getName().toString()+",");
                }
            }
            movie.setDirector(Director);
            movie.setElenco(moviecrew);
            
-           //System.out.println(movie.getPoster_Link());
+           //SALVA OS CERTIFICADOS
+           //SALVA OS ATORES
            
+           //SALVA O FILME
            MoviesDAO mdao = new MoviesDAO();
-           
            //if(mdao.savedetales(movie)){
            //}else{
            //   System.err.println("Not");
           // }
-    */
+    
     
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        response.setContentType("text/html;charset=UTF-8");
-        StringBuilder texto = new StringBuilder("\n");
-        Movie movie = new Movie();
-        
-        String release = request.getParameter("movierelease");
-           ObjectMapper objectMapper1 = new ObjectMapper();
-           String certification = "";
-           Root c = objectMapper1.readValue(release, Root.class);
-           for(Result b : c.getResults()){
-               if(b.getIso_3166_1().toString().equals("US")){
-                for(ReleaseDate a : b.getRelease_dates()){
-                   // System.out.println("MOVIE: "+ movie.getSeries_Title() + "\nCERTI: "+a.getCertification());
-                    certification = a.getCertification();
-                    break;
-                }
-               }
-           }
-           movie.setCertificate(certification);
-           String moviecrew = request.getParameter("moviecrew");
-           String crew = "";
-           String Director = "";
-           ObjectMapper objectMapper2 = new ObjectMapper();
-           RootCrew rootcrew = objectMapper2.readValue(moviecrew, RootCrew.class);
-           for(Crew cast : rootcrew.getCrew()){
-               if(cast.getKnown_for_department().equals("Directing")){
-                   
-                   Director = Director.concat(cast.getName().toString()+",");
-               }
-           }
-           movie.setDirector(Director);
-           movie.setElenco(moviecrew);
-           response.getWriter().write(texto.toString());
-       
-    }
 }

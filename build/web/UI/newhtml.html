@@ -239,12 +239,12 @@ function busca_detalhe(id){
     request.onload = function(){
         var myjsondata = request.response; //request.response contains all our JSON data 
 
-     //alert(myjsondata.credits);
+     //alert(JSON.stringify(myjsondata.credits));
         //console.log(JSON.stringify(myjsondata));
         
-    //   $.ajax({
-   //method: "POST",
-   //url: "http://localhost:8080/ASA/addMovie_DB_Details",
+       $.ajax({
+   method: "POST",
+   url: "http://localhost:8080/ASA/addMovie_DB_Details",
    data: {  movieTitle : myjsondata.title,
             moviePoster : myjsondata.poster_path,
             movieVote : myjsondata.vote_average,

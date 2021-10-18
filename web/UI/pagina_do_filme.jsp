@@ -27,7 +27,7 @@
    <% String titulo = request.getParameter("name"); 
      System.out.println("1"+titulo);
      System.out.println("2"+request.getSession().getAttribute("name"));
-     
+     String id = (String) request.getSession().getAttribute("name");
      if(titulo!=null){
         request.getSession().setAttribute("name",titulo);
      }
@@ -36,7 +36,8 @@
     Movie m = mdao.info_movie(request.getSession().getAttribute("name").toString());
     %>
         window.history.replaceState({}, document.title, "/" + "ASA/Filme#/<%=m.getSeries_Title() %>");
-        
+    //   
+    
     };
  </script>
     <title>ASA - <%=m.getSeries_Title() %></title>
@@ -435,6 +436,7 @@ a {
 </head>
 
 <body translate="no" >
+    <input type="hidden" id="role" value=<%= id %> />
   <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -1067,11 +1069,10 @@ function changeSlide() {
 
     <script>
         
-
-         function busca_detalhe(){
-           
+           alert(document.getElementById("role").value);
+        var id = document.getElementById("role").value;
         
-      var api_key = "249f222afb1002186f4d88b2b5418b55";
+        var api_key = "249f222afb1002186f4d88b2b5418b55";
       
    var requestURL = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api_key + "&append_to_response=release_dates,credits";
 
@@ -1083,29 +1084,42 @@ function changeSlide() {
 
     request.send();
 
-    
-        var myjsondata = request.response; //request.response contains all our JSON data 
-
-     //alert(myjsondata.credits);
-        //console.log(JSON.stringify(myjsondata));
+    request.onload = function(){
+        var myjsondata = request.response; 
+        //alert(JSON.stringify(myjsondata.credits));
+        //alert(JSON.stringify(myjsondata));
         
-       $.ajax({
-      type: "GET",
-       url: "http://localhost:8080/ASA/addMovie_DB_Details",
-        data: {movierelease : JSON.stringify(myjsondata.release_dates),
-            moviecrew : JSON.stringify(myjsondata.credits)
-        }
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/ASA/addMovie_DB_Details",
+            data: { 
+             movierelease : JSON.stringify(myjsondata.release_dates),
+             moviecrew : JSON.stringify(myjsondata.credits)
+            },
+            success: function(response) {
+              alert("AQUI");
+            },
+            error: function(jqXHR) {
+                alert("Erro");
+            }
+          });
+        /*$.ajax({
+         type: "GET",
+         url: "http://localhost:8080/ASA/addMovie_DB_Details",
+         data: {movierelease : JSON.stringify(myjsondata.release_dates),
+             moviecrew : JSON.stringify(myjsondata.credits)
+         }
       complete: [
                     function (response) {
                       alert("AQUI");
                         $("#aa").find("li").remove();
                         
                         var trHTML = response.responseText;
-                       // $("#aa").append(trHTML);
+                        $("#aa").append(trHTML);
                     }
                 ]
-          });
-    } ;
+          });*/
+    }
         </script>
     
 </body>
