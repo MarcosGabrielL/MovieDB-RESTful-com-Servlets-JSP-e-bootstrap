@@ -4,6 +4,12 @@
     Author     : Marcos
 --%>
 
+<%@page import="Bean.CertificationMPAA.ReleaseDate"%>
+<%@page import="Dao.ReleaseCertificadoDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Bean.Crew.Cast"%>
+<%@page import="Dao.CastDAO"%>
 <%@page import="Bean.Movie"%>
 <%@page import="Dao.MoviesDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -35,7 +41,7 @@
    MoviesDAO mdao = new MoviesDAO();
     Movie m = mdao.info_movie(request.getSession().getAttribute("name").toString());
     %>
-        window.history.replaceState({}, document.title, "/" + "ASA/Filme#/<%=m.getSeries_Title() %>");
+        //window.history.replaceState({}, document.title, "/" + "ASA/Filme#/<%=m.getSeries_Title() %>");
     //   
     
     };
@@ -743,6 +749,18 @@ a {
                 
              <div class="movie-data" style="font-size: 18px;">
                  <div class="details" style="border-top: 1px solid rgba(255, 255, 255, 0.07);">
+                     
+                     <% ReleaseCertificadoDAO redao = new ReleaseCertificadoDAO();
+                     String certi = new String();
+                        for(ReleaseDate res : redao.read(id)){
+                            System.out.println(res.getCertification());
+                            if(res.getCertification().equals("")){
+                                certi = "10";
+                            }else{
+                              certi = res.getCertification();  
+                            }
+                            
+   }%>
                      <i class="hd" style="padding: 7px 6px 6px 6px;
     border-radius: 2px;
     font-size: 14px;
@@ -751,7 +769,7 @@ a {
     margin-right: -1px;
     color: #fff;
     background-color: #298eea;
-    /* font-style: italic;*/"><%=m.getCertificate()%></i>
+    /* font-style: italic;*/"><%=certi%></i>
                 <span id="Rated" style="display: inline-block;
     margin: 0 5px;
     color: #333333;"><%=m.getRumtime() %> Min</span><span>
@@ -759,7 +777,7 @@ a {
     text-decoration: none;
     transition: 0.3s ease;
     opacity: 0.7;"><%=m.getGenre().replace(",", " | ") %></a>
-    </span>|<span></span>
+    </span><span></span>
               </div>
             </div>
                 
@@ -774,9 +792,11 @@ a {
           
 </div>
         <div class="comments-container">
-		<h1>Add your review below<a href=""></a></h1>
+		
                 
                 <!-- COMMENT BOX -->
+                <% if(request.getSession().getAttribute("UserId")!=null){%>
+                <h1>Add your review below<a href=""></a></h1>
                 <div class="container" style="width: 100%; float: left;">
                     <form style="    width: 70%; float: left;">
       <div class="form-group">
@@ -802,6 +822,7 @@ a {
     </ul>
   </div>
                 <!-- COMMENT BOX END -->
+                <%}%>
 		<ul id="comments-list" class="comments-list">
                     
                     <h1 style="border-left: none !important;margin-bottom: 17px; margin-left: 80px;">Reviews<a href=""></a></h1>
@@ -910,76 +931,52 @@ a {
 		</ul>
                 <!-- Contenedor lado -->
 <div class="lado">
-    <nav class="menu-left menu-left-open" style="right: 8%;
+    <nav class="menu-left menu-left-open" style="
+          <% if(request.getSession().getAttribute("UserId")==null){%>
+         margin-top: 10px;
+         <%}%>
+         right: 8%;
     opacity: 1;
     width: 22%;
     background: #fff;
     height: auto;">
     <h1>Elenco</h1>
   <ul id="aa" class="person-list">
-      <li>
-          <a href="#" class="person-item" style="color:#333333;font-weight: bold; font-size: 1.3em;">
-              <img src="https://www.fakepersongenerator.com/Face/male/male20161083938332337.jpg" class="person-avatar">
-              <span class="person-name">Ronald Castellon</span>
-              <span class="person-nage">as Personagem</span>
-          </a>
-      </li>
-      <li>
-          <a href="#" class="person-item" style="color:#333333; font-weight: bold; font-size: 1.3em;">
-              <img src="https://www.fakepersongenerator.com/Face/male/male20151083712944519.jpg" class="person-avatar">
-              <span class="person-name">Lee Smith</span>
-              <span class="person-nage">as Personagem</span>
-          </a>
-      </li>
-      <li>
-          <a href="#" class="person-item" style="color:#333333; font-weight: bold; font-size: 1.3em;">
-              <img src="https://www.fakepersongenerator.com/Face/female/female1022946652252.jpg" class="person-avatar">
-              <span class="person-name">Tina McMullen</span>
-              <span class="person-nage">as Personagem</span>
-                  </a>
-              </li>
-        <li>
-          <a href="#" class="person-item" style="color:#333333;font-weight: bold; font-size: 1.3em;">
-              <img src="https://www.fakepersongenerator.com/Face/male/male20161083938332337.jpg" class="person-avatar">
-              <span class="person-name">Ronald Castellon</span>
-              <span class="person-nage">as Personagem</span>
-          </a>
-      </li>
-      <li>
-          <a href="#" class="person-item" style="color:#333333; font-weight: bold; font-size: 1.3em;">
-              <img src="https://www.fakepersongenerator.com/Face/male/male20151083712944519.jpg" class="person-avatar">
-              <span class="person-name">Lee Smith</span>
-              <span class="person-nage">as Personagem</span>
-          </a>
-      </li>
-      <li>
-          <a href="#" class="person-item" style="color:#fff; font-weight: bold; font-size: 1.3em;">
-              <img src="https://www.fakepersongenerator.com/Face/female/female1022946652252.jpg" class="person-avatar">
-              <span class="person-name">Tina McMullen</span>
-              <span class="person-nage">as Personagem</span>
-                  </a>
-              </li>
-         <li>
-          <a href="#" class="person-item" style="color:#fff;font-weight: bold; font-size: 1.3em;">
-              <img src="https://www.fakepersongenerator.com/Face/male/male20161083938332337.jpg" class="person-avatar">
-              <span class="person-name">Ronald Castellon</span>
-              <span class="person-nage">as Personagem</span>
-          </a>
-      </li>
-      <li>
-          <a href="#" class="person-item" style="color:#fff; font-weight: bold; font-size: 1.3em;">
-              <img src="https://www.fakepersongenerator.com/Face/male/male20151083712944519.jpg" class="person-avatar">
-              <span class="person-name">Lee Smith</span>
-              <span class="person-nage">as Personagem</span>
-          </a>
-      </li>
-      <li>
-          <a href="#" class="person-item" style="color:#fff; font-weight: bold; font-size: 1.3em;">
-              <img src="https://www.fakepersongenerator.com/Face/female/female1022946652252.jpg" class="person-avatar">
-              <span class="person-name">Tina McMullen</span>
-              <span class="person-nage">as Personagem</span>
-                  </a>
-              </li>
+      <% CastDAO castdao = new CastDAO();
+       List<Cast> casts = new ArrayList<Cast>();
+       int i = 0;
+         for(Cast c : castdao.read(id)){
+             i++;
+             boolean existe = false;
+             for(Cast b : casts){
+                 if(c.getCredit_id().equals(b.getCredit_id())){existe = true;}
+                 }
+             if(!existe){
+                     
+                     %>
+                    <li>
+                            <a href="#" class="person-item" style="color:#333333;font-weight: bold; font-size: 1.3em;">
+                            <img style="width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-position: center;
+    margin-left: 4px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(<%=c.getProfile_path() %>);">
+                            <span class="person-name"><%=c.getName() %></span>
+                            <span class="person-nage">as <%=c.getCharacter() %></span>
+                        </a>
+                    </li>   
+                     <%
+             }
+casts.add(c);
+if(i>=20){
+break;
+}
+          }%>
+      
+      
   </ul>
 </nav>
   </div>
@@ -1067,60 +1064,7 @@ function changeSlide() {
 //# sourceURL=pen.js
     </script>
 
-    <script>
-        
-           alert(document.getElementById("role").value);
-        var id = document.getElementById("role").value;
-        
-        var api_key = "249f222afb1002186f4d88b2b5418b55";
-      
-   var requestURL = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api_key + "&append_to_response=release_dates,credits";
-
-    var request = new XMLHttpRequest();
-
-    request.open('GET', requestURL);
-
-    request.responseType = 'json';
-
-    request.send();
-
-    request.onload = function(){
-        var myjsondata = request.response; 
-        //alert(JSON.stringify(myjsondata.credits));
-        //alert(JSON.stringify(myjsondata));
-        
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/ASA/addMovie_DB_Details",
-            data: { 
-             movierelease : JSON.stringify(myjsondata.release_dates),
-             moviecrew : JSON.stringify(myjsondata.credits)
-            },
-            success: function(response) {
-              alert("AQUI");
-            },
-            error: function(jqXHR) {
-                alert("Erro");
-            }
-          });
-        /*$.ajax({
-         type: "GET",
-         url: "http://localhost:8080/ASA/addMovie_DB_Details",
-         data: {movierelease : JSON.stringify(myjsondata.release_dates),
-             moviecrew : JSON.stringify(myjsondata.credits)
-         }
-      complete: [
-                    function (response) {
-                      alert("AQUI");
-                        $("#aa").find("li").remove();
-                        
-                        var trHTML = response.responseText;
-                        $("#aa").append(trHTML);
-                    }
-                ]
-          });*/
-    }
-        </script>
+    
     
 </body>
 
