@@ -13,6 +13,7 @@ public class Comentario {
     
     private String critica;
     private String id;
+    private String id_movie;
 private String ID_Cinefilo;
 private String Data;
 private String Avaliação;
@@ -22,6 +23,15 @@ private String curtidas_3_estrela;
 private String curtidas_4_estrela;
 private String curtidas_5_estrela;
 private String score;
+
+    public String getId_movie() {
+        return id_movie;
+    }
+
+    public void setId_movie(String id_movie) {
+        this.id_movie = id_movie;
+    }
+
 
     public String getId() {
         return id;

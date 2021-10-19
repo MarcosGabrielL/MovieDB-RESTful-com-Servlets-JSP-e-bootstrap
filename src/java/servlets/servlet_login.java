@@ -40,7 +40,7 @@ public void doPost(HttpServletRequest request, HttpServletResponse response)
     cinefilo = Login_CinefiloDAO.validate(n, p);
     if( cinefilo.getUser() != null){  
          
-        request.getSession().setAttribute("UserId",cinefilo.getUser());
+        request.getSession().setAttribute("UserId",String.valueOf(cinefilo.getId()));
         response.sendRedirect("UI/Profile_Cinefilo.jsp");
         
     }  

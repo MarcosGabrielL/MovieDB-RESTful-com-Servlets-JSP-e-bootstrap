@@ -22,6 +22,7 @@
 
   <meta charset="UTF-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
   <link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/resource/favicon-16x16.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   	<link rel="stylesheet" href="<%=request.getContextPath()%>/style.css">
@@ -31,9 +32,10 @@
 <script>
     window.onload= function() {
    <% String titulo = request.getParameter("name"); 
-     System.out.println("1"+titulo);
-     System.out.println("2"+request.getSession().getAttribute("name"));
+     //System.out.println("1"+titulo);
+     //System.out.println("2"+request.getSession().getAttribute("name"));
      String id = (String) request.getSession().getAttribute("name");
+     String idc = (String) request.getSession().getAttribute("UserId");
      if(titulo!=null){
         request.getSession().setAttribute("name",titulo);
      }
@@ -442,7 +444,8 @@ a {
 </head>
 
 <body translate="no" >
-    <input type="hidden" id="role" value=<%= id %> />
+    <input type="hidden" id="id" value=<%= id %> />
+    <input type="hidden" id="idc" value=<%= idc %> />
   <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -753,7 +756,6 @@ a {
                      <% ReleaseCertificadoDAO redao = new ReleaseCertificadoDAO();
                      String certi = new String();
                         for(ReleaseDate res : redao.read(id)){
-                            System.out.println(res.getCertification());
                             if(res.getCertification().equals("")){
                                 certi = "10";
                             }else{
@@ -797,17 +799,31 @@ a {
                 <!-- COMMENT BOX -->
                 <% if(request.getSession().getAttribute("UserId")!=null){%>
                 <h1>Add your review below<a href=""></a></h1>
+                
                 <div class="container" style="width: 100%; float: left;">
-                    <form style="    width: 70%; float: left;">
+                    <form id="myForm" style="    width: 70%; float: left;">
       <div class="form-group">
-          <textarea style="height: 120px;" class="form-control status-box" rows="3" placeholder="Enter your comment here..."></textarea>
+          <textarea id="cc" style="height: 120px;" class="form-control status-box" rows="3" placeholder="Enter your comment here..."></textarea>
       </div>
+                        <div class="rate" style="float: right;">
+    <input type="radio" id="star5" name="rate" value="5" />
+    <label for="star5" title="text">5 stars</label>
+    <input type="radio" id="star4" name="rate" value="4" />
+    <label for="star4" title="text">4 stars</label>
+    <input type="radio" id="star3" name="rate" value="3" />
+    <label for="star3" title="text">3 stars</label>
+    <input type="radio" id="star2" name="rate" value="2" />
+    <label for="star2" title="text">2 stars</label>
+    <input type="radio" id="star1" name="rate" value="1" />
+    <label for="star1" title="text">1 star</label>
+  </div>           
     </form>
                     <div class="button-group pull-right" style="    margin-right: 31%;">
                         <p class="counter" style="float: left; margin: 8px;">2500</p>
-                        <a href="#" style="text-decoration: none;
+                        <a onclick="enviar_coment();"  style="text-decoration: none;
     width: 70px;
     line-height: 32px;
+    cursor: pointer;
     font-weight: bold;
     background: #FF3A3A;
     border-radius: 5px;
@@ -1064,7 +1080,49 @@ function changeSlide() {
 //# sourceURL=pen.js
     </script>
 
-    
+    <script>
+        function enviar_coment(){
+            
+            var x = document.getElementById("cc");
+            //alert(x.value);
+            var idmovie = document.getElementById("id").value ;
+            //alert(idmovie);
+            var idperson = document.getElementById("idc").value;
+            try{
+            var rate = document.querySelector('input[name="rate"]:checked').value;
+            $.ajax({
+   url: 'http://localhost:8080/ASA/comentarios_servlet',
+   method: "POST",
+   dataType:"json",
+   data: {idmovie : idmovie ,
+         idperson : idperson,
+         comentario : x.value,
+         rate : rate
+     }, 
+   success: function(response, textStatus, jqXHR) {
+     alert("Yay!");
+   },
+   error: function(jqXHR, textStatus, errorThrown){
+     //alert("Erro:"+JSON.stringify(jqXHR.fail()));
+  }
+});
+        }catch(e){
+            alert("Rate First");
+        }
+            
+           
+              
+           // $.ajax({
+   //method: "POST",
+   //url: "/",
+   //data: {  movieTitle : x.value,
+           // moviePoster : ,
+            //movieVote : 
+       // }
+        //  });
+   // } 
+        }
+    </script>
     
 </body>
 

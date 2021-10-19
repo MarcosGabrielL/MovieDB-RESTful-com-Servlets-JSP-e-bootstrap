@@ -37,12 +37,18 @@ public class ComentarioDAO {
   //System.out.println(String.valueOf(c.getCast_id()));
   try {
    ps = connection.prepareStatement("INSERT INTO data.avaliacao "
-           + "(movie_id, critica,ID_Cinefilo,hora,Avaliacao) VALUES(?,?,?,?,?);");
+           + "(movie_id, critica,ID_Cinefilo,hora,Avaliacao,star1,star2,star3,star4,star5)"
+           + " VALUES(?,?,?,?,?,?,?,?,?,?);");
    ps.setString(1, movieID);
-   ps.setString(2, c.getAvaliação());
+   ps.setString(2, c.getCritica());
    ps.setString(3, cinefiloid);
    ps.setString(4, dataFormatada);
    ps.setString(5, c.getAvaliação());
+   ps.setString(6, c.getCurtidas_1_estrela());
+   ps.setString(7, c.getCurtidas_2_estrela());
+   ps.setString(8, c.getCurtidas_3_estrela());
+   ps.setString(9, c.getCurtidas_4_estrela());
+   ps.setString(10, c.getCurtidas_5_estrela());
    
    ps.executeUpdate();
    
