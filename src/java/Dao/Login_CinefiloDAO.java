@@ -10,6 +10,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import utils.DB_Connection;
 
 
@@ -98,6 +101,100 @@ public static Cinefilo validate(String User, String Pass){
     }
  return flag;
  }
+ 
+ public List<Cinefilo> read(){
+    
+         DB_Connection obj_DB_Connection = new DB_Connection();
+        Connection con = obj_DB_Connection.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Cinefilo> movies = new ArrayList<Cinefilo>();
+        
+        int cont = 0;
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM data.cinefilo ");
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+            
+               Cinefilo c = new Cinefilo();
+                c.setId(Integer.parseInt(rs.getString("id")));
+                c.setUser(rs.getString("user"));
+                c.setPassword(rs.getString("password"));
+                c.setEmail(rs.getString("email"));
+                c.setNome(rs.getString("nome"));
+                c.setTelefone(rs.getString("telefone"));
+                c.setIdade(rs.getString("idade"));
+                c.setFoto(rs.getString("foto"));
+                movies.add(c);
+                cont ++;
+            }
+            
+            
+        } catch (SQLException ex) {
+           System.out.println("Erro 3: "+ex);
+        }finally {
+  try {
+   if(con!=null){
+    con.close();
+   }
+ } catch (Exception e2) {
+ // TODO: handle exception
+ }
+        
+        return movies;
+        
+    
+    }
+    }
+ 
+ public Cinefilo readID( String CinefiloID){
+    
+         DB_Connection obj_DB_Connection = new DB_Connection();
+        Connection con = obj_DB_Connection.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Cinefilo c = new Cinefilo();
+        try {
+            stmt = con.prepareStatement("SELECT * FROM data.cinefilo  where "
+                    + "id like ?");
+            stmt.setString(1, ""+CinefiloID+"");
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+            
+               
+                c.setId(Integer.parseInt(rs.getString("id")));
+                c.setUser(rs.getString("user"));
+                c.setPassword(rs.getString("password"));
+                c.setEmail(rs.getString("email"));
+                c.setNome(rs.getString("nome"));
+                c.setTelefone(rs.getString("telefone"));
+                c.setIdade(rs.getString("idade"));
+                c.setFoto(rs.getString("foto"));
+                
+                
+            }
+            
+            
+        } catch (SQLException ex) {
+           System.out.println("Erro 3: "+ex);
+        }finally {
+  try {
+   if(con!=null){
+    con.close();
+   }
+ } catch (Exception e2) {
+ // TODO: handle exception
+ }
+        
+        
+        
+    
+    }
+        return c;
+    }
 
 }  
 

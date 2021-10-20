@@ -4,6 +4,21 @@
     Author     : Marcos
 --%>
 
+<%@page import="utils.Datas"%>
+<%@page import="org.joda.time.Seconds"%>
+<%@page import="org.joda.time.Months"%>
+<%@page import="org.joda.time.Hours"%>
+<%@page import="org.joda.time.DateTime"%>
+<%@page import="org.joda.time.Days"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="Dao.Login_CinefiloDAO"%>
+<%@page import="Bean.Cinefilo"%>
+<%@page import="Dao.ComentarioDAO"%>
+<%@page import="Bean.Comentario"%>
 <%@page import="Bean.CertificationMPAA.ReleaseDate"%>
 <%@page import="Dao.ReleaseCertificadoDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -31,17 +46,12 @@
 
 <script>
     window.onload= function() {
-   <% String titulo = request.getParameter("name"); 
-     //System.out.println("1"+titulo);
-     //System.out.println("2"+request.getSession().getAttribute("name"));
-     String id = (String) request.getSession().getAttribute("name");
+   <%
+     String id = (String) request.getParameter("name");
      String idc = (String) request.getSession().getAttribute("UserId");
-     if(titulo!=null){
-        request.getSession().setAttribute("name",titulo);
-     }
     
    MoviesDAO mdao = new MoviesDAO();
-    Movie m = mdao.info_movie(request.getSession().getAttribute("name").toString());
+    Movie m = mdao.info_movie(request.getParameter("name").toString());
     %>
         //window.history.replaceState({}, document.title, "/" + "ASA/Filme#/<%=m.getSeries_Title() %>");
     //   
@@ -840,33 +850,44 @@ a {
                 <!-- COMMENT BOX END -->
                 <%}%>
 		<ul id="comments-list" class="comments-list">
+               <h1 style="border-left: none !important;margin-bottom: 17px; margin-left: 80px;">Reviews<a href=""></a></h1>
+		
+               <%   Comentario coment = new Comentario();
+                    Cinefilo cinefilo = new Cinefilo();
+                    ComentarioDAO comentDAO = new ComentarioDAO();
+                    Login_CinefiloDAO cindao = new Login_CinefiloDAO();
+                    List<Comentario> coments = new ArrayList<Comentario>();
                     
-                    <h1 style="border-left: none !important;margin-bottom: 17px; margin-left: 80px;">Reviews<a href=""></a></h1>
-			<li>
-				<div class="comment-main-level" style="width: 92%; float: left;">
+                    for(Comentario c : comentDAO.read(id)){
+
+                        cinefilo = cindao.readID(c.getID_Cinefilo());
+                        Locale locale = new Locale("pt","BR");
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
+                        DateTime date = new DateTime(formatter.parse(c.getData()));
+                        DateTime agora = new DateTime(new Date());
+                        String tempo = Datas.getTempoPassado(date, agora);
+                        
+                           %>
+                    <li>
+				<div class="comment-main-level" style="width: 85%; float: left;">
 					<!-- Avatar -->
-					<div class="comment-avatar"><img src="https://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+					<div class="comment-avatar"><img src="<%=cinefilo.getFoto() %>" alt=""></div>
 					<!-- Contenedor del Comentario -->
                                         <div class="comment-box" style="width: 67%;float: left;"> 
 						<div class="comment-head">
-							<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
-							<span>hace 20 minutos</span>
+							<h6 style="margin-top: 3px; " class="comment-name by-author"><a href=""><%=cinefilo.getNome() %></a></h6>
+                                                        <span style="margin-top: 3px; top:0px;"><%=tempo %></span>
 							<i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
 						</div>
-						<div class="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						 </div>
+						<div style="padding-top: 0px;" class="comment-content"><%=c.getCritica() %></div>
 					</div>
 				</div>
 			</li>
+                        <%}%>
 			<li>
 				<div class="comment-main-level" style="width: 67%;float: left;">
 					<!-- Avatar -->
@@ -1100,7 +1121,11 @@ function changeSlide() {
          rate : rate
      }, 
    success: function(response, textStatus, jqXHR) {
-     alert("Yay!");
+     //alert("Yay!");
+     $("#comments-list").find("li").remove();
+                        
+                        var trHTML = response.responseText;
+                        $("#aa").append(trHTML);
    },
    error: function(jqXHR, textStatus, errorThrown){
      //alert("Erro:"+JSON.stringify(jqXHR.fail()));
@@ -1111,16 +1136,6 @@ function changeSlide() {
         }
             
            
-              
-           // $.ajax({
-   //method: "POST",
-   //url: "/",
-   //data: {  movieTitle : x.value,
-           // moviePoster : ,
-            //movieVote : 
-       // }
-        //  });
-   // } 
         }
     </script>
     
