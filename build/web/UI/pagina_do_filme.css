@@ -245,18 +245,7 @@ font-size: 30px;
 }
 
 .comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {color: #FF3A3A;}
-.comment-box .comment-name.by-author:after {
-	content: '7.5';
-	background: #FF3A3A;
-	color: #FFF;
-	font-size: 12px;
-	padding: 3px 5px;
-	font-weight: 700;
-	margin-left: 10px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
+
 
 /** =====================
  * Responsive

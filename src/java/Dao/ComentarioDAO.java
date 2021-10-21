@@ -69,7 +69,8 @@ public class ComentarioDAO {
     }
  return flag;
  }
-     public List<Comentario> read( String movieID){
+     
+    public  List<Comentario> read( String movieID){
     
          DB_Connection obj_DB_Connection = new DB_Connection();
         Connection con = obj_DB_Connection.getConnection();
@@ -81,7 +82,7 @@ public class ComentarioDAO {
         
         try {
             stmt = con.prepareStatement("SELECT * FROM data.avaliacao where "
-                    + "movie_id like ?");
+                    + "movie_id like ? order by Hora desc");
             stmt.setString(1, ""+movieID+"");
             rs = stmt.executeQuery();
             
@@ -174,4 +175,32 @@ public class ComentarioDAO {
     
     }
     }
+     
+     public boolean deletid(String movieID, String personid){
+    
+     DB_Connection obj_DB_Connection = new DB_Connection();
+        Connection con = obj_DB_Connection.getConnection();
+        PreparedStatement stmt = null;
+        boolean Flag = false;
+        
+    
+        try {
+            stmt = con.prepareStatement("DELETE FROM data.avaliacao where "
+                    + "movie_id like ? and ID_Cinefilo like ?");
+            stmt.setString(1,movieID);
+            stmt.setString(2,personid);
+            
+            stmt.executeUpdate();
+            Flag = true;
+            
+        } catch (SQLException ex) {
+            System.out.println("Erro ao Deletar Comentario: "+ex);
+        } finally{
+        
+        try {
+            if(con!=null){con.close();}} catch (Exception e2) {}
+        }
+    
+    return Flag;
+     }
 }

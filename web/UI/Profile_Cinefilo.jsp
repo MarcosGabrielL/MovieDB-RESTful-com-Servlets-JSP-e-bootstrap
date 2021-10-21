@@ -155,7 +155,7 @@
             <header class="block">
                 <ul class="header-menu horizontal-list">
                     <li>
-                        <a class="header-menu-tab" href="#1"><span class="icon entypo-cog scnd-font-color"></span>Configurações</a>
+                        <a class="header-menu-tab" href="http://localhost:8080/ASA/UI/Profile/Profile_Cinefilo_Configuracao.jsp"><span class="icon entypo-cog scnd-font-color"></span>Configurações</a>
                     </li>
                     <li>
                         <a class="header-menu-tab" href="#2"><span class="icon fontawesome-user scnd-font-color"></span>Amigos</a>

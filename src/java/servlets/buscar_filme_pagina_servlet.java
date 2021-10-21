@@ -69,7 +69,7 @@ public class buscar_filme_pagina_servlet extends HttpServlet {
         
         int i = 0;
         for(Movie p : pdao.Procurar(String.valueOf(nome))){
-            System.out.println("buscar_filme_pagina..."+p.getSeries_Title());
+            //System.out.println("buscar_filme_pagina..."+p.getSeries_Title());
             
             texto.append("<li>"
                     + "<div class=\"movie\"><figure class=\"movie__figure\">"

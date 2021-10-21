@@ -47,7 +47,7 @@
 <script>
     window.onload= function() {
    <%
-     String id = (String) request.getParameter("name");
+     String id = request.getParameter("name");
      String idc = (String) request.getSession().getAttribute("UserId");
     
    MoviesDAO mdao = new MoviesDAO();
@@ -849,7 +849,7 @@ a {
   </div>
                 <!-- COMMENT BOX END -->
                 <%}%>
-		<ul id="comments-list" class="comments-list">
+		<ul style="width: 96%;" id="r" class="comments-list">
                <h1 style="border-left: none !important;margin-bottom: 17px; margin-left: 80px;">Reviews<a href=""></a></h1>
 		
                <%   Comentario coment = new Comentario();
@@ -875,96 +875,38 @@ a {
 					<!-- Contenedor del Comentario -->
                                         <div class="comment-box" style="width: 67%;float: left;"> 
 						<div class="comment-head">
-							<h6 style="margin-top: 3px; " class="comment-name by-author"><a href=""><%=cinefilo.getNome() %></a></h6>
+							<h6 style="margin-top: 3px; " class="comment-name by-author"><a href=""><%=cinefilo.getNome() %></a>
+                                                        <a   style="text-decoration: none;
+                                                                            content: '7.5';
+                                                                            background: #FF3A3A;
+                                                                            color: #FFF;
+                                                                            font-size: 12px;
+                                                                            padding: 3px 5px;
+                                                                            font-weight: 700;
+                                                                            border-radius: 3px;
+                                                                            margin-left: 10px;"><%=c.getAvaliação()%>/10</a></h6>
                                                         <span style="margin-top: 3px; top:0px;"><%=tempo %></span>
 							<i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
+                                                        <a   style="text-decoration: none;
+                                                                            content: '7.5';
+                                                                                float: right;
+                                                                            background: #298eea;
+                                                                            color: #FFF;
+                                                                            font-size: 12px;
+                                                                            padding: 3px 5px;
+                                                                            font-weight: 700;
+                                                                            border-radius: 3px;
+                                                                            margin-left: 10px;"><%=c.getAvaliação()%>/10</a>
 						</div>
 						<div style="padding-top: 0px;" class="comment-content"><%=c.getCritica() %></div>
 					</div>
 				</div>
 			</li>
                         <%}%>
-			<li>
-				<div class="comment-main-level" style="width: 67%;float: left;">
-					<!-- Avatar -->
-					<div class="comment-avatar"><img src="https://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-					<!-- Contenedor del Comentario -->
-					<div class="comment-box" style="width: 67%;float: left;">
-						<div class="comment-head">
-							<h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-							<span>hace 10 minutos</span>
-							<i class="fa fa-reply"></i>
-							<i class="fa fa-heart"></i>
-						</div>
-						<div class="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						</div>
-					</div>
-				</div>
-			</li>
-                        <li>
-				<div class="comment-main-level" style="width: 67%;float: left;">
-					<!-- Avatar -->
-					<div class="comment-avatar"><img src="https://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-					<!-- Contenedor del Comentario -->
-					<div class="comment-box" style="width: 67%;float: left;">
-						<div class="comment-head">
-							<h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-							<span>hace 10 minutos</span>
-							<i class="fa fa-reply"></i>
-							<i class="fa fa-heart"></i>
-						</div>
-						<div class="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						</div>
-					</div>
-				</div>
-			</li>
-                        <li>
-				<div class="comment-main-level" style="width: 67%;float: left;">
-					<!-- Avatar -->
-					<div class="comment-avatar"><img src="https://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-					<!-- Contenedor del Comentario -->
-					<div class="comment-box" style="width: 67%;float: left;">
-						<div class="comment-head">
-							<h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-							<span>hace 10 minutos</span>
-							<i class="fa fa-reply"></i>
-							<i class="fa fa-heart"></i>
-						</div>
-						<div class="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						</div>
-					</div>
-				</div>
-			</li>
-                        <li>
-				<div class="comment-main-level" style="width: 92%; float: left;">
-					<!-- Avatar -->
-					<div class="comment-avatar"><img src="https://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-					<!-- Contenedor del Comentario -->
-					<div class="comment-box" style="width: 67%;float: left;">
-						<div class="comment-head">
-							<h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-							<span>hace 10 minutos</span>
-							<i class="fa fa-reply"></i>
-							<i class="fa fa-heart"></i>
-						</div>
-						<div class="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						</div>
-					</div>
-				</div>
-			</li>
 		</ul>
                 <!-- Contenedor lado -->
 <div class="lado">
@@ -1122,13 +1064,24 @@ function changeSlide() {
      }, 
    success: function(response, textStatus, jqXHR) {
      //alert("Yay!");
-     $("#comments-list").find("li").remove();
+     $("#r").find("li").remove();
                         
-                        var trHTML = response.responseText;
-                        $("#aa").append(trHTML);
+     var trHTML = response.responseText;
+     $("#r").append(trHTML);
    },
-   error: function(jqXHR, textStatus, errorThrown){
+   error: function(jqXHR, textStatus, errorThrown, response){
      //alert("Erro:"+JSON.stringify(jqXHR.fail()));
+     $("#r").find("li").remove();
+     
+      document.getElementById("cc").value = "";
+      var elements = document.getElementsByTagName("input");
+        for (var i = 0; i < elements.length; i++) {
+        if (elements[i].type === "radio") {
+            elements[i].checked = false;
+        }
+    }
+     var trHTML = jqXHR.responseText;
+     $("#r").append(trHTML);
   }
 });
         }catch(e){
