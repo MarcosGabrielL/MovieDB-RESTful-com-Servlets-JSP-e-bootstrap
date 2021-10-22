@@ -4,6 +4,14 @@
         <servlet-name>comentarios_servlet</servlet-name>
         <servlet-class>servlets.comentarios_servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>uploadAvatar_Cloud</servlet-name>
+        <servlet-class>servlets.uploadAvatar_Cloud</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>avatarServlet</servlet-name>
+        <servlet-class>servlets.avatarServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>buscar_filme_pagina_servlet</servlet-name>
         <url-pattern>/buscar_filme_pagina_servlet</url-pattern>
@@ -11,6 +19,14 @@
     <servlet-mapping>
         <servlet-name>comentarios_servlet</servlet-name>
         <url-pattern>/comentarios_servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadAvatar_Cloud</servlet-name>
+        <url-pattern>/uploadAvatar_Cloud</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>avatarServlet</servlet-name>
+        <url-pattern>/avatarServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

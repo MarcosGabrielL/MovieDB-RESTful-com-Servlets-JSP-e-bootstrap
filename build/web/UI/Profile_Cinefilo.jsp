@@ -4,6 +4,10 @@
     Author     : Marcos
 --%>
 
+<%@page import="javax.imageio.ImageIO"%>
+<%@page import="org.apache.commons.io.IOUtils"%>
+<%@page import="Bean.Avatar"%>
+<%@page import="Dao.AvatarDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
@@ -13,10 +17,11 @@
  if(request.getSession().getAttribute("UserId")==null){
      %>
      <script>
-    window.onload= function() {
+  
        alert( " Você não esta logado, faça o login Primeiro!");
        window.location.replace("login_cinefilo.jsp");
-    };
+       
+    
  </script>
  <%
 }
@@ -29,6 +34,7 @@
   <meta charset="UTF-8">
 
   <title>Profile - <%=user %></title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   
   <link rel="shortcut icon" type="image/x-icon" href="../resource/favicon-16x16.png">
   
@@ -183,7 +189,8 @@
                 <div class="profile-menu">
                     <p>Eu <a href="#26"><span class="entypo-down-open scnd-font-color"></span></a></p>
                     <div class="profile-picture small-profile-picture">
-                        <img width="40px" alt="Anne Hathaway picture" src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Anne_Hathaway_Face.jpg">
+                        
+                        <img width="40px" height="40px" id="myImg" alt="Anne Hathaway picture" src="http://localhost:8080/ASA/avatarServlet?id=<%=user %>">
                     </div>
                 </div>
             </header>
@@ -341,7 +348,26 @@
   
   
   
-  
+    <script>
+        //  window.onload= function() {
+      // $.ajax({
+  //  url: 'http://localhost:8080/ASA/avatarServlet',
+  //  type: "GET",
+  //  dataType:"json",
+  //  data: {id :
+  //    }, 
+  //  success: function(response, textStatus, jqXHR) {
+     //alert("Yay!");
+  //     alert(response.responseText);
+  //  },
+  //  error: function(jqXHR, textStatus, errorThrown, response){
+     //alert("Erro:"+JSON.stringify(jqXHR.fail()));
+  //    alert(response.toString());
+  //    document.getElementById("myImg").src = response;
+//   }
+// });
+       //      };
+        </script>
 
 </body>
 
