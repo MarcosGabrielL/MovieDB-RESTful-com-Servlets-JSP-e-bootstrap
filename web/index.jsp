@@ -121,7 +121,7 @@
 		<div class="main" role="main">
 
 			<div class="top-bar">
-	<input type="text" placeholder="Buscar Filme ..." style="
+	<input id="id_of_textbox" type="text" placeholder="Buscar Filme ..." style="
 	        align-content: floa;
 	    /* float: right; */
 	    background: #e8e8e8;
@@ -140,7 +140,7 @@
 	    transition-duration: 0.3s;
 	    margin-right: 10px;
 	"/>
-	<p class="fa fa-search" style="
+	<p id="busc" class="fa fa-search" style="
 	    /* position: absolute; */
 	    top: 17px;
 	    right: 10px;
@@ -560,7 +560,180 @@ $('.overlay').addClass('overlay-blue');
     }
 </script>
 
+<script>
+    document.getElementById("id_of_textbox")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+       buttonCode();
+    }
+});
+document.getElementById("busc")
+    .addEventListener("click", function(event) {
+    event.preventDefault();
+    
+        buttonCode();
+    
+});
+function buttonCode(){
+    var a = document.getElementById("id_of_textbox").value;
+  window.location.replace("http://localhost:8080/ASA/UI/busca_de_filme.jsp?descb="+a);
+}
+    </script>
 
+     <script id="rendered-js" >
+const API_KEY = "249f222afb1002186f4d88b2b5418b55";
+
+const API_SEARCH = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=`;
+
+const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
+
+//let page = "501";
+let page = "1";
+
+const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_video=true&page=`;
+
+const mainContent = document.getElementById("movie-content");
+// search form elements
+const form = document.getElementById("search-form");
+const search = document.getElementById("search");
+// pagination elements
+const pageLinks = document.querySelectorAll(".page-link");
+console.log(pageLinks);
+
+// initially get the most popular movies list's first page
+getMovies(API_URL + page);
+
+// previous and next page
+pageLinks.forEach(pageLink => {
+  pageLink.addEventListener("click", () => {
+    if (pageLink.id === "next") {
+      page++;
+      getMovies(API_URL + page);
+    }
+    if (pageLink.id === "previous" && page > 1) {
+      page--;
+      getMovies(API_URL + page);
+    }
+  });
+});
+
+// search for a movie
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  console.log(search.value);
+  const query = search.value;
+  if (query) {
+    getMovies(API_SEARCH + query);
+  }
+});
+
+async function getMovies(url) {
+  const resp = await fetch(url);
+  const respData = await resp.json();
+  console.log(respData);
+  console.log(respData.total_pages);
+  showMovies(respData.results);
+}
+
+function showMovies(movies) {
+  mainContent.innerHTML = "";
+  movies.forEach(movie => {
+    const movieTitle = movie.title;
+    const moviePoster = movie.poster_path;
+    const movieVote = movie.vote_average;
+    const movieDesc = movie.overview;
+    const movieData = movie.release_date;
+    const movietempo = movie.runtime;
+    const movieid = movie.id;
+    
+    busca_detalhe(movieid);
+    
+    const movieElm = document.createElement("div");
+    movieElm.classList.add(
+    "col-xs-12",
+    "col-sm-6",
+    "col-md-4",
+    "col-lg-3",
+    "p-0");
+
+
+    movieElm.innerHTML = `
+    <div class="movie-card">
+              <img
+                class="img-fluid movie-img"
+                src="${IMAGE_PATH}${moviePoster}"
+                onError="this.onerror=null;this.src='https://i.ebayimg.com/images/g/1EMAAMXQdGJR2-n3/s-l1600.jpg';"
+                alt="Sorry, something went wrong"
+              />
+              <div
+                class="movie-description p-3 d-flex justify-content-between align-items-center"
+              >
+                <h3 class="movie-title">${movieTitle}</h3>
+                <h3 class="movie-vote">${movieVote}</h3>
+              </div>
+            </div>
+    `;
+    mainContent.appendChild(movieElm);
+    //$.ajax({
+   //method: "POST",
+   //url: "http://localhost:8080/ASA/addMovie_DB",
+   //data: {src: IMAGE_PATH + moviePoster,
+      //    title: movieTitle,
+     //     rate: movieVote,
+     //     overview: movieDesc,
+     //     data: movieData,
+     //     tempo: movietempo
+       // }
+        //  });
+  });
+  
+    }
+
+function busca_detalhe(id){
+      var api_key = "249f222afb1002186f4d88b2b5418b55";
+      
+   var requestURL = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api_key + "&append_to_response=release_dates,credits";
+
+    var request = new XMLHttpRequest();
+
+    request.open('GET', requestURL);
+
+    request.responseType = 'json';
+
+    request.send();
+
+    request.onload = function(){
+        var myjsondata = request.response; //request.response contains all our JSON data 
+
+     //alert(JSON.stringify(myjsondata.credits));
+        //console.log(JSON.stringify(myjsondata));
+        
+       $.ajax({
+   method: "POST",
+   url: "http://localhost:8080/ASA/addMovie_DB_Details",
+   data: {  movieTitle : myjsondata.title,
+            moviePoster : myjsondata.poster_path,
+            movieVote : myjsondata.vote_average,
+            movieDesc : myjsondata.overview,
+            movieData : myjsondata.release_date,
+            movietempo : myjsondata.runtime,
+            movieid : myjsondata.id,
+            moviegenres : JSON.stringify(myjsondata.genres),
+            movieid : id,
+            movierelease : JSON.stringify(myjsondata.release_dates),
+            moviecrew : JSON.stringify(myjsondata.credits)
+        }
+          });
+    } 
+}
+
+
+//# sourceURL=pen.js
+    </script>
+    
+    
+    
 </body>
 
 </html>

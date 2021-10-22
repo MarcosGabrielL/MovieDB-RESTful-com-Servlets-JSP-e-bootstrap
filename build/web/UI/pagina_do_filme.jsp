@@ -871,7 +871,7 @@ a {
                     <li>
 				<div class="comment-main-level" style="width: 85%; float: left;">
 					<!-- Avatar -->
-					<div class="comment-avatar"><img src="<%=cinefilo.getFoto() %>" alt=""></div>
+					<div class="comment-avatar"><img src="http://localhost:8080/ASA/avatarServlet?id=<%=c.getID_Cinefilo() %>" alt=""></div>
 					<!-- Contenedor del Comentario -->
                                         <div class="comment-box" style="width: 67%;float: left;"> 
 						<div class="comment-head">

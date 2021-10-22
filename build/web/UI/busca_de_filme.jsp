@@ -14,7 +14,18 @@
     
     <% MoviesDAO mdao = new MoviesDAO();
     List<Movie> movies = new ArrayList<Movie>();
-    movies = mdao.read();
+        //Verifica se veio de busca
+        if(request.getParameter("descb") != null){
+            //Se True -> Busca pelo nome
+            movies = mdao.Procurar((String)request.getParameter("descb"));
+        }else{
+            //Se False --> Busca 20 mais populares
+             movies = mdao.read();
+        }
+        
+        
+        
+       
     %>
     
     <head>
@@ -135,17 +146,8 @@ input {
 }
 </style>
 
-  <script>
-  window.console = window.console || function(t) {};
-</script>
 
   
-  
-  <script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
-</script>
 </head>
 
 <body translate="no">
@@ -316,9 +318,8 @@ function myFunction() {
     
   
 </script>
-
   
-             </script>
+
  
 </body>
 </html>
